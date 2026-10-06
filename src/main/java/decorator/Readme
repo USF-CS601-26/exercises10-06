@@ -1,0 +1,30 @@
+In this exercise, you will practice the Decorator design pattern by building a simple text formatting system for a console-based “editor.”
+Use decorators to dynamically add behavior (bold, italic, underline, red color) to a plain text object.
+
+This exercise mirrors the Beverage + Condiments example you saw in class, but with text instead of coffee drinks.
+
+Tasks:
+
+1. Write the Abstract Decorator -> TextDecorator
+Write code in the TextDecorator class that implements Text.
+It should store an instance variable Text decoratedText.
+
+Its render() method should just delegate to decoratedText.render().
+This step is essential to the pattern: a decorator is-a Text, but also has-a Text!
+
+2. Implement Concrete Decorators
+Each class should extend TextDecorator and wrap the output of super.render() with ANSI codes:
+
+BoldDecorator → AnsiCodes.BOLD … AnsiCodes.RESET (see Bold Decorator).
+
+Implement other decorators:
+ItalicDecorator
+UnderlineDecorator
+RedDecorator
+
+3. Fill in code in the DecoratorDemo class with a main method that:
+
+Creates a PlainText:
+Text text = new PlainText("Hello, world!");
+Wraps it in different decorators (BoldDecorator, ItalicDecorator, UnderlineDecorator, RedDecorator).
+Prints the results to the console.

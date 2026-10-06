@@ -1,0 +1,93 @@
+Observer Design Pattern Exercise
+
+In this exercise, you will complete a small program that uses the Observer design pattern.
+
+The program models a Caltrain notification system. Passengers are waiting for particular trains.
+When Caltrain receives updated delay information, all registered passengers are notified.
+Each passenger then checks the status of their own train and decides whether to keep waiting
+
+1. Complete `Caltrain`
+
+Modify `Caltrain` so that it implements the `Subject` interface.
+
+Add:
+
+- a `HashMap` that maps a train number to its current delay in minutes
+- a list of registered `Observer` objects
+
+Then implement the methods required by the `Subject` interface:
+
+registerObserver:
+Add the observer to the list of registered observers.
+
+removeObserver:
+Remove the observer from the list.
+
+notifyObservers:
+Call `update()` on every registered observer.
+
+2. Complete `updateDelay` in class `Caltrain`:
+
+updateDelay(int trainNumber, int additionalDelay)
+
+The parameter `additionalDelay` represents an additional delay for that train.
+
+For example:
+trainManager.updateDelay(702, 5);
+trainManager.updateDelay(702, 10);
+means that train 702 first has a 5-minute delay and then receives an additional 10-minute delay.
+Its total delay is now 15 minutes.
+
+Your method should:
+
+1. Find the current delay for the given train.
+2. Add `additionalDelay` to it.
+3. Store the new delay in the map.
+4. Notify all registered observers.
+
+If there is no existing delay information for a train, assume its current delay is 0.
+
+3. Complete getDelayInfo(int trainNumber)
+
+This method should return the current delay for the given train.
+If there is no delay information for that train, treat the delay as 0.
+
+Also complete:
+public boolean isOnTime(int trainNumber) -  should return true if the train has no delay and false if there is a delay.
+
+4. Complete `Passenger`
+
+Modify `Passenger` so that it implements the `Observer` interface.
+Each passenger is waiting for one particular train.
+
+MAX_WAIT = 10 represents the maximum delay, in minutes, that the passenger is willing to wait.
+
+Complete the `update()` method.
+
+When a passenger is notified, the passenger should check the current delay for their own train.
+If the train has no delay, print: "Glad to know my train is still on time".
+
+If the train is delayed by 10 minutes or less, print:
+"I will wait - the train should be here soon".
+
+If the delay is greater than 10 minutes, print:
+"Bummer, that's too long, I have to take Uber instead."
+
+Each message should begin with the passenger's name.
+
+5. Test Your Code
+
+After you complete `Caltrain` and `Passenger`, uncomment the code in `CaltrainDriver`.
+
+The driver:
+
+- creates three passengers
+- registers them as observers
+- updates the delays for several trains
+
+Every time `updateDelay` is called, all registered observers should be notified.
+Each passenger should then check only the train they are waiting for.
+Your program should produce the output shown in `CaltrainDriver`.
+
+Notice that `Caltrain` does not need to know the details of how a `Passenger` responds to an update.
+It only knows that every registered `Observer` has an `update()` method.
